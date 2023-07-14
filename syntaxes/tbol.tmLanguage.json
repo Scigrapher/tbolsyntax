@@ -1,0 +1,144 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "tbol",
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#program_id"
+    },
+    {
+      "include": "#copy"
+    },
+    {
+      "include": "#proc"
+    },
+    {
+      "include": "#comments"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.tbol",
+          "begin": "{",
+          "end": "}"
+        }
+      ]
+    },
+    "program_id": {
+      "patterns": [
+        {
+          "name": "keyword.program.tbol",
+          "match": "^PROGRAM\\s+([a-zA-Z_][a-zA-Z_0-9]{,30});",
+          "captures": {
+            "1": {
+              "name": "entity.name.section"
+            }
+          }
+        }
+      ]
+    },
+    "copy": {
+      "patterns": [
+        {
+          "name": "keyword.copy.tbol",
+          "match": "^(COPY)\\s+([a-zA-Z_][a-zA-Z_0-9]{,30});",
+          "captures": {
+            "1": {
+              "name": "keyword.copy.tbol"
+            },
+            "2": {
+              "name": "entity.name.import.tbol"
+            }
+          }
+        }
+      ]
+    },
+    "proc": {
+      "name": "meta.function.tbol",
+      "begin": "^(PROC)\\s+([a-zA-Z_][a-zA-Z_0-9]{,30})\\s+=\\s*",
+      "end": "^END_PROC",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.function.tbol"
+        },
+        "2": {
+          "name": "entity.name.function.tbol"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#code_block"
+        }
+      ]
+    },
+    "do": {
+      "name": "meta.block.tbol",
+      "begin": "(DO)",
+      "end": "^\\s*(END)\\s*;",
+      "captures": {
+        "1": {
+          "name": "keyword.control.tbol"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#code_block"
+        }
+      ]
+    },
+    "label": {
+      "name": "",
+      "match": "^\\s*([a-zA-Z_][a-zA-Z_0-9]{,30}):",
+      "captures": {
+        "1": {
+          "name": "entity.name.label.tbol"
+        }
+      }
+    },
+    "code_block": {
+      "patterns": [
+        {
+          "include": "#label"
+        },
+        {
+          "include": "#instructions"
+        }
+      ]
+    },
+    "instructions": {
+      "patterns": [
+        {
+          "match": "(SUBSTR|MOVE|RETURN|ADD|SUBTRACT)\\b\\s*.*;",
+          "comment": "Need to correctly support arguments",
+          "captures": {
+            "1": {
+              "name": "keyword.control.tbol"
+            }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.tbol",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.tbol",
+          "match": "\\\\."
+        }
+      ]
+    }
+  },
+  "scopeName": "source.tbol"
+}

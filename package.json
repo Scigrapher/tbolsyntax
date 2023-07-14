@@ -1,0 +1,38 @@
+{
+  "name": "tbolsyntax",
+  "displayName": "tbolsyntax",
+  "description": "Syntax highlighting for the TBOL language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "tbol",
+        "aliases": [
+          "tbol",
+          "tbol"
+        ],
+        "extensions": [
+          ".src",
+          ".tbol"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tbol",
+        "scopeName": "source.tbol",
+        "path": "./syntaxes/tbol.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
